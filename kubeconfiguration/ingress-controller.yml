@@ -23,9 +23,13 @@ spec:
       containers:
         - name: haproxy-ingress
           image: haproxytech/kubernetes-ingress:latest
+          securityContext:
+            capabilities:
+              add: ["NET_BIND_SERVICE"]
           args:
             - --default-backend-service=$(POD_NAMESPACE)/haproxy-ingress-default-backend
             - --ingress-class=haproxy
+            - --publish-service=default/haproxy-ingress
           env:
             - name: POD_NAMESPACE
               valueFrom:
@@ -59,12 +63,12 @@ spec:
   ports:
     - name: http
       port: 80
-      targetPort: 80
-      nodePort: 30081
+      targetPort: 8080
+      nodePort: 30080
     - name: https
       port: 443
-      targetPort: 443
-      nodePort: 31443
+      targetPort: 8443
+      nodePort: 30443
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -72,7 +76,7 @@ metadata:
   name: haproxy-ingress-config
   namespace: default
 data:
-  # optional HAProxy config overrides
+  publish-service: "default/haproxy-ingress"
   log-level: info
 ---
 apiVersion: v1
