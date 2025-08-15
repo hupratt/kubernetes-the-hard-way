@@ -23,3 +23,6 @@ registerNode: true
 runtimeRequestTimeout: "15m"
 tlsCertFile: "/var/lib/kubelet/kubelet.crt"
 tlsPrivateKeyFile: "/var/lib/kubelet/kubelet.key"
+clusterDNS:
+  - 10.0.0.10
+clusterDomain: cluster.loca
