@@ -24,8 +24,6 @@ spec:
       labels:
         app: haproxy-ingress
     spec:
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       serviceAccountName: haproxy-ingress
       containers:
         - name: haproxy-ingress
