@@ -19,12 +19,6 @@ spec:
         image: mongo-express
         ports:
         - containerPort: 8081
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8081
-          initialDelaySeconds: 5
-          periodSeconds: 5
         env:
         - name: ME_CONFIG_MONGODB_ADMINUSERNAME
           valueFrom:
