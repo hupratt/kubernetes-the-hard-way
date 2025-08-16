@@ -4,10 +4,13 @@ metadata:
   name: mongo-express-ingress
   namespace: default
   annotations:
-    kubernetes.io/ingress.class: "haproxy"
+    haproxy.org/health-check-path: "/"
+    haproxy.org/health-check-status: "401"
 spec:
+  ingressClassName: haproxy
   rules:
-    - http:
+    - host: mongo-k8s.thekor.eu
+      http:
         paths:
           - path: /
             pathType: Prefix
