@@ -11,7 +11,7 @@ metadata:
   name: haproxy-ingress
   namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: haproxy-ingress
@@ -20,6 +20,14 @@ spec:
       labels:
         app: haproxy-ingress
     spec:
+      hostNetwork: true
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: haproxy-ingress
+              topologyKey: "kubernetes.io/hostname"
       serviceAccountName: haproxy-ingress
       containers:
         - name: haproxy-ingress
@@ -94,3 +102,13 @@ data:
   use-forwarded-for: "true"
   healthz-port: "0"            # disables health endpoint
   disable-backend-checks: "true"  # disable active backend health checks
+
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: haproxy
+spec:
+  controller: haproxy.org/ingress-controller
+
+---

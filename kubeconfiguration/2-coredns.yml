@@ -80,8 +80,6 @@ spec:
       labels:
         k8s-app: coredns
     spec:
-      hostNetwork: true
-      dnsPolicy: Default
       serviceAccountName: coredns
       tolerations:
       - key: "node-role.kubernetes.io/control-plane"
@@ -101,23 +99,15 @@ spec:
           name: dns-tcp
           protocol: TCP
         livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 60
+          tcpSocket:
+            port: 53
+          initialDelaySeconds: 30
           timeoutSeconds: 5
-          successThreshold: 1
-          failureThreshold: 5
         readinessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-            scheme: HTTP
+          tcpSocket:
+            port: 53
           initialDelaySeconds: 0
           timeoutSeconds: 5
-          successThreshold: 1
-          failureThreshold: 3
         volumeMounts:
         - name: config-volume
           mountPath: /etc/coredns
