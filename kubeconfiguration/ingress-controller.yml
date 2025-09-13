@@ -91,3 +91,6 @@ data:
   ssl-ciphers: "ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384"
   disable-backend-health-checks: "true"
   backend-check-status: "200,401"
+  use-forwarded-for: "true"
+  healthz-port: "0"            # disables health endpoint
+  disable-backend-checks: "true"  # disable active backend health checks
