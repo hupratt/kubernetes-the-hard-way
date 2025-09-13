@@ -4,8 +4,9 @@ metadata:
   name: mongo-express-ingress
   namespace: default
   annotations:
-    haproxy.org/health-check-path: "/"
-    haproxy.org/health-check-status: "401"
+    haproxy.org/check: "disabled"
+    haproxy.org/backend-config-snippet: |
+      no option httpchk
 spec:
   ingressClassName: haproxy
   rules:
