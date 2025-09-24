@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-cloud2-adata-de
+  namespace: cert-manager
+spec:
+  secretName: wildcard-cloud2-tls
+  issuerRef:
+    name: letsencrypt-dns-hetzner
+    kind: ClusterIssuer
+  commonName: "*.cloud2.adata.de"
+  dnsNames:
+  - "*.cloud2.adata.de"
+  - "cloud2.adata.de"

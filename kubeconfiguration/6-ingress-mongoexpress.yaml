@@ -9,8 +9,12 @@ metadata:
       no option httpchk
 spec:
   ingressClassName: haproxy
+  tls:
+    - hosts:
+        - mongo.cloud2.adata.de
+      secretName: wildcard-cloud2-tls
   rules:
-    - host: mongo-k8s.thekor.eu
+    - host: mongo.cloud2.adata.de
       http:
         paths:
           - path: /
