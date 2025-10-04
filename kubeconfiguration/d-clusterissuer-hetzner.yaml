@@ -12,7 +12,7 @@ spec:
     solvers:
     - dns01:
         webhook:
-          groupName: acme.adata.de   # can be any domain you own
+          groupName: acme.adata.de
           solverName: hetzner
           config:
             secretName: hetzner-dns-api-token

@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: haproxy-ingress-role
-  namespace: default
+  namespace: cert-manager
 rules:
   - apiGroups: [""]
     resources: ["pods", "services", "endpoints"]
@@ -16,11 +16,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: haproxy-ingress-binding
-  namespace: default
+  namespace: cert-manager
 subjects:
   - kind: ServiceAccount
     name: haproxy-ingress
-    namespace: default
+    namespace: cert-manager
 roleRef:
   kind: Role
   name: haproxy-ingress-role
@@ -65,7 +65,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: haproxy-ingress
-    namespace: default
+    namespace: cert-manager
 roleRef:
   kind: ClusterRole
   name: haproxy-ingress-clusterrole

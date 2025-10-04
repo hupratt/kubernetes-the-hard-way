@@ -3,15 +3,15 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: haproxy-ingress
-  namespace: default
+  namespace: cert-manager
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: haproxy-ingress
-  namespace: default
+  namespace: cert-manager
 spec:
-  replicas: 6
+  replicas: 3
   selector:
     matchLabels:
       app: haproxy-ingress
@@ -72,7 +72,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: haproxy-ingress
-  namespace: default
+  namespace: cert-manager
 spec:
   type: LoadBalancer
   selector:
@@ -89,7 +89,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: haproxy-ingress-config
-  namespace: default
+  namespace: cert-manager
 data:
   # optional tweaks, leave minimal for now
   syslog-endpoint: "stdout"
