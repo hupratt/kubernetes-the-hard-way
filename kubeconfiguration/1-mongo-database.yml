@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongodb-deployment
+  namespace: cert-manager
   labels:
     app: mongo
 spec:
@@ -30,11 +31,19 @@ spec:
             secretKeyRef:
               name: mongodb-secret
               key: mongo-root-password
+        volumeMounts:
+        - name: mongodb-storage
+          mountPath: /data/db
+      volumes:
+      - name: mongodb-storage
+        persistentVolumeClaim:
+          claimName: test-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: mongodb-service
+  namespace: cert-manager
 spec:
   selector:
     app: mongo
@@ -47,6 +56,7 @@ apiVersion: v1
 kind: Secret
 metadata:
     name: mongodb-secret
+    namespace: cert-manager
 type: Opaque
 data:
     mongo-root-username: dXNlcm5hbWU=
@@ -56,5 +66,6 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mongodb-configmap
+  namespace: cert-manager
 data:
   database_url: mongodb-service
