@@ -4,7 +4,7 @@ metadata:
   name: wildcard-thekor
   namespace: cert-manager
 spec:
-  secretName: wildcard-cloud2-tls
+  secretName: wildcard-thekor
   issuerRef:
     name: letsencrypt-dns-hetzner
     kind: ClusterIssuer

@@ -12,7 +12,7 @@ spec:
   tls:
     - hosts:
         - mongo.thekor.eu
-      secretName: wildcard-cloud2-tls
+      secretName: wildcard-thekor
   rules:
     - host: mongo.thekor.eu
       http:
