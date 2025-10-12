@@ -5,16 +5,16 @@ metadata:
   namespace: cert-manager
 spec:
   acme:
-    email: technik@adata.de
+    email: hprattdo@gmail.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-dns-hetzner-key
     solvers:
-    - dns01:
-        webhook:
-          groupName: acme.adata.de
-          solverName: hetzner
-          config:
-            secretName: hetzner-dns-api-token
-            zoneName: adata.de
-            apiUrl: https://dns.hetzner.com/api/v1
+      - dns01:
+          webhook:
+            solverName: hetzner
+            groupName: acme.hetzner.com
+            config:
+              tokenSecretKeyRef:
+                name: hetzner-dns-api-token
+                key: token
