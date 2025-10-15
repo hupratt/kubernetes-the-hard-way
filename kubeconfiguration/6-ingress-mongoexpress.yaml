@@ -11,10 +11,10 @@ spec:
   ingressClassName: haproxy
   tls:
     - hosts:
-        - mongo.cloud2.adata.de
-      secretName: wildcard-cloud2-tls
+        - mongo.thekor.eu
+      secretName: wildcard-thekor
   rules:
-    - host: mongo.cloud2.adata.de
+    - host: mongo.thekor.eu
       http:
         paths:
           - path: /
