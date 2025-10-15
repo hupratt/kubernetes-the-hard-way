@@ -50,3 +50,4 @@ service-account-csr.json
 *.swp
 .idea/
 downloads/
+kubeconfiguration/deploy/grafana/values_adata.yaml
