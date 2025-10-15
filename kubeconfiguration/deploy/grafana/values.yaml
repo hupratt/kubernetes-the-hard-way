@@ -1,11 +1,37 @@
-service:
-  type: ClusterIP
+envValueFrom:
+  GF_AUTH_GENERIC_OAUTH_CLIENT_ID:
+    secretKeyRef:
+      name: grafana-admin-secret
+      key: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+
+  GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET:
+    secretKeyRef:
+      name: grafana-admin-secret
+      key: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+
+  GF_SECURITY_ADMIN_PASSWORD:
+    secretKeyRef:
+      name: grafana-admin-secret
+      key: password
+
+grafana.ini:
+  server:
+    domain: dashboard.thekor.eu
+    root_url: https://dashboard.thekor.eu
+  auth.generic_oauth:
+    enabled: true
+    name: Authentik
+    allow_sign_up: true
+    scopes: openid profile email
+    auth_url: https://auth.thekor.eu/application/o/authorize/
+    token_url: https://auth.thekor.eu/application/o/token/
+    api_url: https://auth.thekor.eu/application/o/userinfo/
 
 ingress:
   enabled: true
-  ingressClassName: haproxy
   hosts:
     - dashboard.thekor.eu
+  ingressClassName: haproxy
   tls:
     - hosts:
         - dashboard.thekor.eu
@@ -16,21 +42,7 @@ persistence:
   size: 15Gi
   storageClassName: rook-ceph-block
 
-extraEnvFrom:
-  - secretRef:
-      name: grafana-oauth-secret
-
-grafana:
-  grafana.ini:
-    server:
-      root_url: https://dashboard.thekor.eu
-      domain: dashboard.thekor.eu
-
-    auth.generic_oauth:
-      enabled: true
-      name: Authentik
-      allow_sign_up: true
-      scopes: openid profile email
-      auth_url: https://auth.thekor.eu/application/o/authorize/
-      token_url: https://auth.thekor.eu/application/o/token/
-      api_url: https://auth.thekor.eu/application/o/userinfo/
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
