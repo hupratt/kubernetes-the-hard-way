@@ -1,0 +1,1 @@
+k get secret wildcard-cloud2-tls -o yaml > tls.yaml

@@ -1,0 +1,36 @@
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: true
+  ingressClassName: haproxy
+  hosts:
+    - dashboard.thekor.eu
+  tls:
+    - hosts:
+        - dashboard.thekor.eu
+      secretName: wildcard-cloud2-tls
+
+persistence:
+  enabled: true
+  size: 15Gi
+  storageClassName: rook-ceph-block
+
+extraEnvFrom:
+  - secretRef:
+      name: grafana-oauth-secret
+
+grafana:
+  grafana.ini:
+    server:
+      root_url: https://dashboard.thekor.eu
+      domain: dashboard.thekor.eu
+
+    auth.generic_oauth:
+      enabled: true
+      name: Authentik
+      allow_sign_up: true
+      scopes: openid profile email
+      auth_url: https://auth.thekor.eu/application/o/authorize/
+      token_url: https://auth.thekor.eu/application/o/token/
+      api_url: https://auth.thekor.eu/application/o/userinfo/
