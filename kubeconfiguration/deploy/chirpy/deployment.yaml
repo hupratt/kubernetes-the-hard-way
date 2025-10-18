@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: bundle
-        image: chirpy-jekyll_dev:latest
+        image: registry.thekor.eu/github/chirpy:latest
         volumeMounts:
         - name: bundle-volume
           mountPath: /bundle
@@ -23,6 +23,8 @@ spec:
       - name: bundle-volume
         persistentVolumeClaim:
           claimName: chirpy-pvc
+      imagePullSecrets:
+      - name: regcred
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -41,23 +43,18 @@ spec:
     spec:
       containers:
       - name: jekyll-dev
-        image: chirpy-jekyll_dev:latest
+        image: registry.thekor.eu/github/chirpy:latest
         ports:
         - containerPort: 4000
         volumeMounts:
-        - name: app-volume
-          mountPath: /home/myuser/app
         - name: bundle-volume
           mountPath: /bundle
       volumes:
-      - name: app-volume
-        hostPath:
-          path: ./theproject   # Only works on local dev clusters like kind/minikube
-          type: Directory
       - name: bundle-volume
         persistentVolumeClaim:
           claimName: chirpy-pvc
-
+      imagePullSecrets:
+      - name: regcred
 ---
 apiVersion: v1
 kind: Service
